@@ -46,10 +46,20 @@ const lyricChangeReducer = (songsById=initialState.songsById, action) => {
   }
 }
 
-// JEST TESTS + SETUP
-console.log('--START TESTS--');
-const { expect } = window;
+const songChangeReducer = (currentSongId=initialState.currentSongId, action) => {
+  switch (action.type) {
+    case 'CHANGE_SONG':
+      return action.newSelectedSongId;
+    default:
+      return currentSongId;
+  }
+}
 
+// JEST TESTS + SETUP
+const { expect } = window;
+console.log('--START TESTS--');
+
+console.log('- lyricChangeReducer -')
 console.log('default action');
 expect(lyricChangeReducer(initialState.songsById, { type: null })).toEqual(initialState.songsById);
 
@@ -88,6 +98,11 @@ expect(lyricChangeReducer(initialState.songsById, { type: 'RESTART_SONG', curren
     lyricsPosition: 0,
   },
 });
+
+console.log('- songChangeReducer -')
+console.log('CHANGE_SONG');
+expect(songChangeReducer(initialState.currentSongId, { type: 'CHANGE_SONG', newSelectedSongId: 1 })).toEqual(1);
+
 console.log('--END TESTS--');
 
 // REDUX STORE
